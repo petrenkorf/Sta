@@ -10,8 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-indexed-db-hook": "^1.0.14",
     "semantic-ui-css": "^2.5.0",
     "semantic-ui-react": "^2.1.5",
     "uuid": "^11.1.0"

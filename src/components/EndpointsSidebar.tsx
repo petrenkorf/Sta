@@ -2,24 +2,26 @@ import { FC } from "react"
 import { Sidebar, Button, Divider } from "semantic-ui-react"
 
 type Endpoint = {
-  title: string
+  title: string,
+  fixed: Boolean,
+  method: string,
+  address: string,
+  id: string
 }
 
 type EndpointsSidebarProps = {
   endpoints: Endpoint[],
   onAddEndpoint: (event: React.MouseEvent<HTMLButtonElement>) => void
-  onClickEndpoint: (event: React.MouseEvent<HTMLDivElement>) => void
+  onClickEndpoint: (endpoint: Endpoint, idx: string) => void
 }
 
 const EndpointsSidebar: FC<EndpointsSidebarProps> = ({ endpoints, onAddEndpoint, onClickEndpoint }) => {
   return (
-    <Sidebar visible style={{
-      paddingTop: '12px'
-    }}>
+    <Sidebar visible style={{ paddingTop: '12px' }}>
       {
         endpoints.map((endpoint, idx) => (
-          <div className="endpoint-item" key="idx" onClick={onClickEndpoint}>
-            {endpoint.title}
+          <div className="endpoint-item" key={idx} onClick={() => (onClickEndpoint(endpoint, idx))}>
+            {endpoint.method} - {endpoint.title}
             <Divider></Divider>
           </div>
         ))
@@ -30,3 +32,4 @@ const EndpointsSidebar: FC<EndpointsSidebarProps> = ({ endpoints, onAddEndpoint,
 }
 
 export default EndpointsSidebar
+export type { Endpoint }

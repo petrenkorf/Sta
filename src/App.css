@@ -21,3 +21,16 @@
   cursor: pointer;
 }
 
+.unfixed-tab {
+  font-style: italic;
+}
+
+.endpoint-page-container {
+  width: calc(100% - 260px);
+  margin-left: 260px;
+}
+
+.top-bar {
+  width: calc(100% - 260px);
+  margin-left: 260px;
+}

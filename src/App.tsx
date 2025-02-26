@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { use, useEffect, useRef, useState } from 'react'
 import './App.css'
 import EndpointsSidebar, { Endpoint } from './components/EndpointsSidebar'
 import EndpointPage from './components/EndpointPage'
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from 'semantic-ui-react';
+import { useIndexedDB } from 'react-indexed-db-hook';
 
 function App() {
   const [endpoints, setEndpoints] = useState<Endpoint[]>([])
@@ -11,20 +12,27 @@ function App() {
 
   const addressInputRef = useRef<HTMLInputElement>(null)
 
+  const { add: addEndpointEvent } = useIndexedDB('events')
+
   useEffect(() => {
     addressInputRef.current?.focus()
   }, [currentEndpoint])
 
   const addEndpoint = () => {
+    const newEndpoint = {
+      id: uuidv4(),
+      title: `New Endpoint ${endpoints.length}`,
+      fixed: false,
+      method: 'GET',
+      address: ''
+    }
     setEndpoints((prevEndpoints) => (
-      [...prevEndpoints, {
-        id: uuidv4(),
-        title: `New Endpoint ${prevEndpoints.length}`,
-        fixed: false,
-        method: 'GET',
-        address: ''
-      }]
+      [...prevEndpoints, newEndpoint]
     ))
+    addEndpointEvent(newEndpoint)
+      .then((event) => {
+        console.log(event)
+      })
   }
 
   const openEndpoint = (endpoint: Endpoint) => {

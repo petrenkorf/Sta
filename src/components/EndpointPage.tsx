@@ -1,6 +1,6 @@
 import { Button, Dropdown, Input, Select } from "semantic-ui-react"
 import { Endpoint } from "./EndpointsSidebar"
-import { useEffect, useRef } from "react"
+import { Ref, useEffect, useRef } from "react"
 
 const options = [
   { key: 'GET', text: 'GET', value: 'GET' },
@@ -19,7 +19,7 @@ const EndpointPage = ({
   onAddressChange: React.FC,
   onHttpMethodChange: React.FC,
   onClickSendButton: React.FC,
-  addressInputRef: HTMLInputElement
+  addressInputRef: Ref<Input>
 }) => {
 
   if (!endpoint) {

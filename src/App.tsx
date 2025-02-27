@@ -7,12 +7,20 @@ import { Button } from 'semantic-ui-react';
 import { useIndexedDB } from 'react-indexed-db-hook';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true)
+  const { add: addEndpointEvent, getAll } = useIndexedDB('events')
+
   const [endpoints, setEndpoints] = useState<Endpoint[]>([])
   const [currentEndpoint, setCurrentEndpoint] = useState<Endpoint | null>(null)
 
   const addressInputRef = useRef<HTMLInputElement>(null)
 
-  const { add: addEndpointEvent } = useIndexedDB('events')
+  useEffect(() => {
+    getAll().then((eventsFromDB) => {
+      setEndpoints(eventsFromDB)
+      setIsLoading(false)
+    })
+  }, [])
 
   useEffect(() => {
     addressInputRef.current?.focus()
@@ -77,6 +85,14 @@ function App() {
     onHttpMethodChange: handleHttpMethodChange,
     onClickSendButton: sendRequest,
     addressInputRef: addressInputRef
+  }
+
+  if (isLoading) {
+    return (
+      <>
+        <p>Loading...</p>
+      </>
+    )
   }
 
   return (

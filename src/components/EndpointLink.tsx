@@ -1,6 +1,6 @@
 import { MouseEventHandler, useState } from "react"
 import { Endpoint } from "./EndpointsSidebar"
-import { Button, Divider } from "semantic-ui-react"
+import { Button } from "semantic-ui-react"
 
 const EndpointLink = ({
   endpoint,
@@ -20,21 +20,23 @@ const EndpointLink = ({
     setShowDeleteButton({ display: 'none' })
   }
 
-  return (<div
-    className="endpoint-item"
-    key={idx}
-    onClick={onClick}
-    onMouseEnter={showDeleteButton}
-    onMouseLeave={hideDeleteButton} >
-    {endpoint.method} - {endpoint.title} {displayDeleteButton &&
-      <Button
-        style={displayDeleteButton}
+  return (
+    <>
+      <div
+        className="endpoint-item"
+        key={idx}
+        onClick={onClick}
         onMouseEnter={showDeleteButton}
-        onMouseLeave={showDeleteButton}
-        size='mini'
-        icon='delete' />}
-    <Divider></Divider>
-  </div >)
+        onMouseLeave={hideDeleteButton} >
+        {endpoint.method} - {endpoint.title} {displayDeleteButton &&
+          <Button
+            style={displayDeleteButton}
+            onMouseEnter={showDeleteButton}
+            onMouseLeave={showDeleteButton}
+            size='mini'
+            icon='delete' />}
+      </div >
+    </>)
 }
 
 export default EndpointLink

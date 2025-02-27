@@ -12,10 +12,16 @@ type Endpoint = {
 type EndpointsSidebarProps = {
   endpoints: Endpoint[],
   onAddEndpoint: (event: React.MouseEvent<HTMLButtonElement>) => void
-  onClickEndpoint: (endpoint: Endpoint, idx: string) => void
+  onClickEndpoint: (endpoint: Endpoint, idx: string) => void,
+  onRemoveEndpoint: (id: string) => void
 }
 
-const EndpointsSidebar: FC<EndpointsSidebarProps> = ({ endpoints, onAddEndpoint, onClickEndpoint }) => {
+const EndpointsSidebar: FC<EndpointsSidebarProps> = ({
+  endpoints,
+  onAddEndpoint,
+  onClickEndpoint,
+  onRemoveEndpoint
+}) => {
   return (
     <Sidebar visible style={{ paddingTop: '12px' }}>
       {
@@ -25,6 +31,7 @@ const EndpointsSidebar: FC<EndpointsSidebarProps> = ({ endpoints, onAddEndpoint,
             key={idx}
             idx={idx}
             onClick={() => (onClickEndpoint(endpoint, idx))}
+            onClickDeleteButton={onRemoveEndpoint}
           />
         ))
       }

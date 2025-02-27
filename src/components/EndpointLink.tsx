@@ -5,11 +5,14 @@ import { Button } from "semantic-ui-react"
 const EndpointLink = ({
   endpoint,
   idx,
-  onClick }: {
-    endpoint: Endpoint,
-    idx: number,
-    onClick: MouseEventHandler<HTMLDivElement>
-  }) => {
+  onClick,
+  onClickDeleteButton
+}: {
+  endpoint: Endpoint,
+  idx: number,
+  onClick: MouseEventHandler<HTMLDivElement>
+  onClickDeleteButton: MouseEventHandler<HTMLButtonElement>
+}) => {
   const [displayDeleteButton, setShowDeleteButton] = useState({ display: 'none' })
 
   const showDeleteButton = () => {
@@ -19,6 +22,11 @@ const EndpointLink = ({
   const hideDeleteButton = () => {
     setShowDeleteButton({ display: 'none' })
   }
+
+  const handleDeleteClick = () => {
+    onClickDeleteButton(endpoint.id)
+  }
+
 
   return (
     <>
@@ -33,6 +41,7 @@ const EndpointLink = ({
             style={displayDeleteButton}
             onMouseEnter={showDeleteButton}
             onMouseLeave={showDeleteButton}
+            onClick={handleDeleteClick}
             size='mini'
             icon='delete' />}
       </div >

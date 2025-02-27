@@ -8,7 +8,12 @@ import { useIndexedDB } from 'react-indexed-db-hook';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true)
-  const { add: addEndpointEvent, getAll } = useIndexedDB('events')
+
+  const {
+    add: addEndpointEvent,
+    getAll,
+    deleteRecord
+  } = useIndexedDB('events')
 
   const [endpoints, setEndpoints] = useState<Endpoint[]>([])
   const [currentEndpoint, setCurrentEndpoint] = useState<Endpoint | null>(null)
@@ -28,7 +33,7 @@ function App() {
 
   const addEndpoint = () => {
     const newEndpoint = {
-      id: uuidv4(),
+      // id: uuidv4(),
       title: `New Endpoint ${endpoints.length}`,
       fixed: false,
       method: 'GET',
@@ -38,11 +43,16 @@ function App() {
     addEndpointEvent(newEndpoint).then((event) => console.log(event))
   }
 
+  const deleteEndpoint = (id) => {
+    deleteRecord(id).then((event) => {
+      setEndpoints(endpoints.filter(item => item.id !== id))
+    });
+  }
+
   const openEndpoint = (endpoint: Endpoint) => {
     setCurrentEndpoint(endpoint)
     addressInputRef.current?.focus()
   }
-
 
   const updateCurrentEndpoint = (tempEndpoint: Endpoint) => {
     const tempEndpoints = [...endpoints]
@@ -77,6 +87,7 @@ function App() {
   const endpointsProps = {
     endpoints,
     onAddEndpoint: addEndpoint,
+    onRemoveEndpoint: deleteEndpoint,
     onClickEndpoint: openEndpoint
   }
   const endpointPageProps = {

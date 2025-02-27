@@ -1,6 +1,6 @@
-import { FC } from "react"
-import { Sidebar, Button, Divider } from "semantic-ui-react"
-
+import { FC, MouseEventHandler, useState } from "react"
+import { Sidebar, Button } from "semantic-ui-react"
+import EndpointLink from "./EndpointLink"
 type Endpoint = {
   title: string,
   fixed: Boolean,
@@ -20,10 +20,12 @@ const EndpointsSidebar: FC<EndpointsSidebarProps> = ({ endpoints, onAddEndpoint,
     <Sidebar visible style={{ paddingTop: '12px' }}>
       {
         endpoints.map((endpoint, idx) => (
-          <div className="endpoint-item" key={idx} onClick={() => (onClickEndpoint(endpoint, idx))}>
-            {endpoint.method} - {endpoint.title}
-            <Divider></Divider>
-          </div>
+          < EndpointLink
+            endpoint={endpoint}
+            key={idx}
+            idx={idx}
+            onClick={() => (onClickEndpoint(endpoint, idx))}
+          />
         ))
       }
       < Button onClick={onAddEndpoint} > Add Endpoint</Button >

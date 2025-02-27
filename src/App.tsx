@@ -1,4 +1,4 @@
-import { use, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import './App.css'
 import EndpointsSidebar, { Endpoint } from './components/EndpointsSidebar'
 import EndpointPage from './components/EndpointPage'
@@ -26,13 +26,8 @@ function App() {
       method: 'GET',
       address: ''
     }
-    setEndpoints((prevEndpoints) => (
-      [...prevEndpoints, newEndpoint]
-    ))
-    addEndpointEvent(newEndpoint)
-      .then((event) => {
-        console.log(event)
-      })
+    setEndpoints((prevEndpoints) => ([...prevEndpoints, newEndpoint]))
+    addEndpointEvent(newEndpoint).then((event) => console.log(event))
   }
 
   const openEndpoint = (endpoint: Endpoint) => {
@@ -41,9 +36,9 @@ function App() {
   }
 
 
-  const updateCurrentEndpoint = (tempEndpoint) => {
+  const updateCurrentEndpoint = (tempEndpoint: Endpoint) => {
     const tempEndpoints = [...endpoints]
-    const currentEndpointIndex = endpoints.findIndex((item) => item.id == currentEndpoint.id)
+    const currentEndpointIndex = endpoints.findIndex((item) => item.id == currentEndpoint?.id)
     tempEndpoints[currentEndpointIndex] = tempEndpoint
 
     setEndpoints(tempEndpoints)
@@ -71,23 +66,26 @@ function App() {
     // https://http.cat/404
   }
 
+  const endpointsProps = {
+    endpoints,
+    onAddEndpoint: addEndpoint,
+    onClickEndpoint: openEndpoint
+  }
+  const endpointPageProps = {
+    endpoint: currentEndpoint,
+    onAddressChange: handleAddressChange,
+    onHttpMethodChange: handleHttpMethodChange,
+    onClickSendButton: sendRequest,
+    addressInputRef: addressInputRef
+  }
+
   return (
     <>
-      <EndpointsSidebar
-        endpoints={endpoints}
-        onAddEndpoint={addEndpoint}
-        onClickEndpoint={openEndpoint} />
+      <EndpointsSidebar {...endpointsProps} />
       <div className='top-bar'>
         <Button primary >Share</Button>
       </div>
-      <div className='endpoint-page-container'>
-        <EndpointPage
-          endpoint={currentEndpoint}
-          onAddressChange={handleAddressChange}
-          onHttpMethodChange={handleHttpMethodChange}
-          onClickSendButton={sendRequest}
-          addressInputRef={addressInputRef} />
-      </div>
+      <EndpointPage {...endpointPageProps} />
     </>
   )
 }

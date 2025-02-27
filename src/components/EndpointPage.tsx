@@ -24,7 +24,7 @@ const EndpointPage = ({
 
   if (!endpoint) {
     return (
-      <div>
+      <div className="endpoint-page-container">
         Select an endpoint
       </div>
     )
@@ -32,8 +32,7 @@ const EndpointPage = ({
 
   return (
 
-    < div style={{ marginTop: '12px' }
-    }>
+    < div style={{ marginTop: '12px' }} className="endpoint-page-container">
       {endpoint.title}
       < Input
         action

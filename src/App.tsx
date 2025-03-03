@@ -34,7 +34,7 @@ function App() {
   const addEndpoint = () => {
     const newEndpoint = {
       id: uuidv4(),
-      title: `New Endpoint ${endpoints.length}`,
+      title: `New Endpoint ${endpoints.length + 1}`,
       fixed: false,
       method: 'GET',
       address: ''
@@ -64,25 +64,39 @@ function App() {
     setCurrentEndpoint(() => (tempEndpoint))
   }
 
-  const handleAddressChange = (e) => {
-    const tempEndpoint = currentEndpoint;
-    tempEndpoint.address = e.target.value
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const tempEndpoint: Endpoint = currentEndpoint;
+    tempEndpoint.address = e?.target?.value
 
     updateCurrentEndpoint(tempEndpoint)
   }
 
-  const handleHttpMethodChange = (e, { value }) => {
+  const handleHttpMethodChange = (_, { value }) => {
     const tempEndpoint = currentEndpoint;
     tempEndpoint.method = value
 
     updateCurrentEndpoint(tempEndpoint)
   }
 
-  const sendRequest = () => {
+  const sendRequest = (e, callback) => {
     fetch(currentEndpoint?.address)
       .then(res => res.json())
-      .then(data => console.log)
-    // https://http.cat/404
+      .then(data => {
+        const tempEndpoint: Endpoint = currentEndpoint;
+        tempEndpoint.lastResponse = JSON
+          .stringify(data)
+          .replaceAll("{", "{\r\n")
+          .replaceAll("\",", "\",\r\n")
+          .replaceAll("\"}", "\"\r\n}")
+
+        updateCurrentEndpoint(tempEndpoint)
+      })
+      .then(() => { callback() })
+      .catch(error => {
+        alert(error)
+        callback()
+      })
+    // http://cataas.com/cat?json=true
   }
 
   const endpointsProps = {

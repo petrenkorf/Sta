@@ -1,6 +1,6 @@
-import { Button, Dropdown, Input, Select } from "semantic-ui-react"
+import { Button, Dropdown, Form, Input, Loader, TextArea } from "semantic-ui-react"
 import { Endpoint } from "./EndpointsSidebar"
-import { Ref, useEffect, useRef } from "react"
+import { Ref, useState } from "react"
 
 const options = [
   { key: 'GET', text: 'GET', value: 'GET' },
@@ -21,6 +21,15 @@ const EndpointPage = ({
   onClickSendButton: React.FC,
   addressInputRef: Ref<Input>
 }) => {
+
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSendClick = (e) => {
+    setIsLoading(true)
+    onClickSendButton(e, () => {
+      setIsLoading(false)
+    })
+  }
 
   if (!endpoint) {
     return (
@@ -50,8 +59,12 @@ const EndpointPage = ({
           value={endpoint.method}
           onChange={onHttpMethodChange}></Dropdown >
         <input />
-        <Button primary onClick={onClickSendButton}>Send</Button>
+        <Button primary onClick={handleSendClick}>Send</Button>
       </Input>
+      {isLoading && <Loader active inline />}
+      <Form>
+        <TextArea readOnly={true} value={endpoint.lastResponse} style={{ minHeight: 300 }} />
+      </Form>
     </div >
   )
 }

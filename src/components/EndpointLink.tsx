@@ -11,7 +11,7 @@ const EndpointLink = ({
   endpoint: Endpoint,
   idx: number,
   onClick: MouseEventHandler<HTMLDivElement>
-  onClickDeleteButton: MouseEventHandler<HTMLButtonElement>
+  onClickDeleteButton: (id: string) => void
 }) => {
   const [displayDeleteButton, setShowDeleteButton] = useState({ display: 'none' })
 

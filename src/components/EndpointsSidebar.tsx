@@ -6,7 +6,8 @@ type Endpoint = {
   fixed: Boolean,
   method: string,
   address: string,
-  id: string
+  id: string,
+  lastResponse: string,
 }
 
 type EndpointsSidebarProps = {

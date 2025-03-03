@@ -33,18 +33,19 @@ function App() {
 
   const addEndpoint = () => {
     const newEndpoint = {
-      // id: uuidv4(),
+      id: uuidv4(),
       title: `New Endpoint ${endpoints.length}`,
       fixed: false,
       method: 'GET',
       address: ''
     }
-    setEndpoints((prevEndpoints) => ([...prevEndpoints, newEndpoint]))
-    addEndpointEvent(newEndpoint).then((event) => console.log(event))
+    addEndpointEvent(newEndpoint).then((_) => {
+      setEndpoints((prevEndpoints) => ([...prevEndpoints, newEndpoint]))
+    })
   }
 
-  const deleteEndpoint = (id) => {
-    deleteRecord(id).then((event) => {
+  const deleteEndpoint = (id: string) => {
+    deleteRecord(id).then((_) => {
       setEndpoints(endpoints.filter(item => item.id !== id))
     });
   }

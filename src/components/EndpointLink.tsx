@@ -23,10 +23,20 @@ const EndpointLink = ({
     setShowDeleteButton({ display: 'none' })
   }
 
-  const handleDeleteClick = () => {
+  const handleDeleteClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.stopPropagation();
     onClickDeleteButton(endpoint.id)
   }
 
+  const HttpMethod = ({
+    method
+  }: {
+    method: string
+  }) => {
+    return (
+      <label className={method}>{method}</label>
+    )
+  }
 
   return (
     <>
@@ -36,7 +46,7 @@ const EndpointLink = ({
         onClick={onClick}
         onMouseEnter={showDeleteButton}
         onMouseLeave={hideDeleteButton} >
-        {endpoint.method} - {endpoint.title} {displayDeleteButton &&
+        <HttpMethod method={endpoint.method} /> - {endpoint.title} {displayDeleteButton &&
           <Button
             style={displayDeleteButton}
             onMouseEnter={showDeleteButton}

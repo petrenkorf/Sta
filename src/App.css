@@ -20,6 +20,8 @@
 .endpoint-item {
   cursor: pointer;
   border-bottom: 1px solid #c6c6c6;
+  height: 30px;
+  vertical-align: middle;
 }
 
 .unfixed-tab {
@@ -34,4 +36,20 @@
 .top-bar {
   width: calc(100% - 260px);
   margin-left: 260px;
+}
+
+.GET {
+  color: green;
+}
+
+.POST {
+  color: gold;
+}
+
+.PUT {
+  color: blue;
+}
+
+.DELETE {
+  color: red;
 }

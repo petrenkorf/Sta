@@ -25,7 +25,7 @@ const EndpointPage = ({
   if (!endpoint) {
     return (
       <div className="endpoint-page-container">
-        Select an endpoint
+        Select an endpoint in the sidebar or create a new one
       </div>
     )
   }
